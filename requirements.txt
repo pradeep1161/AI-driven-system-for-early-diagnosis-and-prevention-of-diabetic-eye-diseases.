@@ -1,0 +1,15 @@
+Flask
+tensorflow
+numpy
+Pillow
+opencv-python-headless
+tf-keras-vis
+google-generativeai
+markdown
+Flask-SQLAlchemy
+Flask-Login
+plotly
+python-dotenv
+reportlab
+weasyprint
+google-genai

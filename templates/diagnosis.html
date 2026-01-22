@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-translate="diagnosis-portal">Diagnosis - AI-DRIVE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-gray-900 dark:bg-gray-900 text-gray-200 dark:text-gray-200 transition-colors duration-300">
+  <div class="fixed top-4 left-4 z-50">
+    <select id="language-selector" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm shadow-lg">
+      <option value="en">🇺🇸 English</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="it">🇮🇹 Italiano</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="ko">🇰🇷 한국어</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+      <option value="bn">🇧🇩 বাংলা</option>
+      <option value="ur">🇵🇰 اردو</option>
+      <option value="ta">🇮🇳 தமிழ்</option>
+      <option value="te">🇮🇳 తెలుగు</option>
+      <option value="ml">🇮🇳 മലയാളം</option>
+      <option value="kn">🇮🇳 ಕನ್ನಡ</option>
+      <option value="gu">🇮🇳 ગુજરાતી</option>
+      <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+      <option value="mr">🇮🇳 मराठी</option>
+    </select>
+  </div>
+
+  <div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg shadow-lg transition-colors hover:bg-gray-300 dark:hover:bg-gray-600">
+      <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+      </svg>
+      <svg id="moon-icon" class="w-6 h-6 text-gray-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-cyan-400 text-center mb-6" data-translate="diagnosis-portal">🩺 Diagnosis Portal</h1>
+    <nav class="flex justify-center gap-4 mb-6">
+      <a href="/" class="bg-gray-700 px-4 py-2 rounded hover:bg-gray-600 transition" data-translate="home">Back to Home</a>
+    </nav>
+
+    <form id="diagnosis-form" class="bg-gray-800 p-6 rounded shadow-xl max-w-3xl mx-auto border border-gray-700" enctype="multipart/form-data">
+      <h2 class="text-xl text-cyan-300 mb-4 border-b border-gray-700 pb-2">1. Patient Details</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <input type="text" name="patient_name" data-translate="patient-name" placeholder="Patient name" class="p-2 rounded bg-gray-700 dark:bg-gray-700 text-white border border-gray-600 focus:border-cyan-400 focus:outline-none" />
+        <input type="number" name="patient_age" data-translate="age" placeholder="Age" class="p-2 rounded bg-gray-700 dark:bg-gray-700 text-white border border-gray-600 focus:border-cyan-400 focus:outline-none" />
+      </div>
+
+      <h2 class="text-xl text-cyan-300 mb-4 border-b border-gray-700 pb-2">2. Diabetes Info & Symptoms</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <select name="diabetes_type" class="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-cyan-400 focus:outline-none">
+          <option>Type 2</option>
+          <option>Type 1</option>
+          <option>Gestational</option>
+          <option>Prediabetes</option>
+          <option>None</option>
+        </select>
+        <input type="number" name="diabetes_duration" placeholder="Duration (years)" class="p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-cyan-400 focus:outline-none" />
+      </div>
+      <textarea name="symptoms" rows="3" placeholder="Describe symptoms" class="w-full p-2 rounded bg-gray-700 text-white mb-4 border border-gray-600 focus:border-cyan-400 focus:outline-none"></textarea>
+
+      <h2 class="text-xl text-cyan-300 mb-4 border-b border-gray-700 pb-2">3. Upload Images (choose one or both)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 border border-gray-700 rounded hover:bg-gray-750 transition">
+          <p class="font-semibold mb-2 text-cyan-200">Fundus Image (Retinal Photo)</p>
+          <p class="text-sm text-gray-400 mb-2">Detects: Cataract, Diabetic Retinopathy, Glaucoma</p>
+          <input type="file" name="fundus_image" accept="image/*" class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-900 file:text-cyan-300 hover:file:bg-cyan-800"/>
+        </div>
+        <div class="p-4 border border-gray-700 rounded hover:bg-gray-750 transition">
+          <p class="font-semibold mb-2 text-cyan-200">OCT Image (Optical Coherence)</p>
+          <p class="text-sm text-gray-400 mb-2">Detects: DME (Macular Edema) and retinal layers</p>
+          <input type="file" name="oct_image" accept="image/*" class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-900 file:text-cyan-300 hover:file:bg-cyan-800"/>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 rounded transition shadow-lg transform hover:scale-[1.01]">Perform Diagnosis</button>
+      </div>
+    </form>
+
+    <div id="results-section" class="hidden max-w-4xl mx-auto mt-8">
+      <div id="loading" class="text-center text-cyan-400 mb-4 hidden">
+        <svg class="animate-spin h-8 w-8 mx-auto mb-2 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>🤖 analyzing images... please wait...</span>
+      </div>
+      <div id="results-content" class="space-y-6"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('diagnosis-form');
+    const resultsSection = document.getElementById('results-section');
+    const loading = document.getElementById('loading');
+    const resultsContent = document.getElementById('results-content');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resultsSection.classList.remove('hidden');
+      loading.classList.remove('hidden');
+      resultsContent.innerHTML = ''; // Clear previous results
+
+      const fd = new FormData(form);
+      
+      try {
+        const res = await fetch('/predict', { method: 'POST', body: fd });
+        const data = await res.json();
+        
+        // 🔍 DEBUG: Print the exact data from backend to Console (Press F12 to see)
+        console.log("Server Response:", data);
+
+        loading.classList.add('hidden');
+
+        let html = '';
+
+        // 1. Handle Global Errors
+        if (data.error) {
+            resultsContent.innerHTML = `<div class="bg-red-900 border border-red-700 text-red-100 p-4 rounded text-center font-bold">❌ Error: ${data.error}</div>`;
+            return;
+        }
+
+        // 2. FUNDUS RESULTS
+        if (data.fundus_result) {
+          if (data.fundus_result.error) {
+            html += `<div class="bg-red-900 border border-red-700 p-4 rounded mb-4">⚠️ Fundus Error: ${data.fundus_result.error}</div>`;
+          } else {
+            // Check where the advice is hiding
+            const advice = data.fundus_result.ai_advice || data.ai_advice || "<p>AI advice not available.</p>";
+            
+            html += `
+              <div class="bg-gray-800 border border-gray-700 p-6 rounded shadow-lg">
+                <div class="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
+                    <h3 class="text-2xl text-cyan-300 font-bold">👁️ Fundus Analysis</h3>
+                    <span class="bg-cyan-900 text-cyan-300 px-3 py-1 rounded-full text-sm font-semibold">${data.fundus_result.prediction}</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <p class="text-gray-300"><strong>Confidence:</strong> <span class="text-white">${data.fundus_result.confidence}%</span></p>
+                        <p class="text-gray-300"><strong>Severity/Status:</strong> <span class="text-white">${data.fundus_result.severity || 'N/A'}</span></p>
+                        <div class="mt-4 p-4 bg-gray-700 rounded-lg">
+                            <h4 class="text-cyan-200 font-bold mb-2">🤖 AI Ophthalmologist Advice:</h4>
+                            <div class="prose prose-invert max-w-none text-sm leading-relaxed">
+                                ${advice}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs text-gray-400 mb-1">Original Upload:</p>
+                            <img src="${data.fundus_result.original_image}" class="rounded w-full border border-gray-600 h-48 object-cover" alt="Original">
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 mb-1">AI Heatmap (Attention Map):</p>
+                            <img src="${data.fundus_result.heatmap_image}" class="rounded w-full border border-gray-600 h-48 object-cover" alt="Heatmap">
+                        </div>
+                    </div>
+                </div>
+              </div>`;
+          }
+        }
+
+        // 3. OCT RESULTS
+        if (data.oct_result) {
+          if (data.oct_result.error) {
+            html += `<div class="bg-red-900 border border-red-700 p-4 rounded mt-6">⚠️ OCT Error: ${data.oct_result.error}</div>`;
+          } else {
+             // Check where the advice is hiding
+            const advice = data.oct_result.ai_advice || data.ai_advice || "<p>AI advice not available.</p>";
+
+            html += `
+              <div class="bg-gray-800 border border-gray-700 p-6 rounded shadow-lg mt-6">
+                 <div class="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
+                    <h3 class="text-2xl text-green-300 font-bold">🔬 OCT Analysis</h3>
+                    <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm font-semibold">${data.oct_result.prediction}</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <p class="text-gray-300"><strong>Confidence:</strong> <span class="text-white">${data.oct_result.confidence}%</span></p>
+                        <p class="text-gray-300"><strong>Severity/Status:</strong> <span class="text-white">${data.oct_result.severity || 'N/A'}</span></p>
+                        <div class="mt-4 p-4 bg-gray-700 rounded-lg">
+                            <h4 class="text-green-200 font-bold mb-2">🤖 AI OCT Interpretation:</h4>
+                            <div class="prose prose-invert max-w-none text-sm leading-relaxed">
+                                ${advice}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                             <p class="text-xs text-gray-400 mb-1">Original OCT:</p>
+                            <img src="${data.oct_result.original_image}" class="rounded w-full border border-gray-600 h-48 object-cover" alt="Original OCT">
+                        </div>
+                        <div>
+                             <p class="text-xs text-gray-400 mb-1">AI Heatmap:</p>
+                            <img src="${data.oct_result.heatmap_image}" class="rounded w-full border border-gray-600 h-48 object-cover" alt="OCT Heatmap">
+                        </div>
+                    </div>
+                </div>
+              </div>`;
+          }
+        }
+
+        // 4. PDF DOWNLOAD BUTTON
+        if (data.fundus_result || data.oct_result) {
+          html += `
+            <div class="mt-8 text-center pb-8">
+              <button id="download-pdf-btn" class="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-bold py-4 px-8 rounded-lg shadow-xl transition-all duration-200 flex items-center justify-center mx-auto transform hover:-translate-y-1">
+                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Download Official PDF Report</span>
+              </button>
+            </div>`;
+        }
+
+        // Inject HTML
+        resultsContent.innerHTML = html;
+        
+        // Add PDF Listener
+        const downloadBtn = document.getElementById('download-pdf-btn');
+        if (downloadBtn) {
+          downloadBtn.addEventListener('click', async () => {
+            try {
+              downloadBtn.disabled = true;
+              const originalText = downloadBtn.innerHTML;
+              downloadBtn.innerHTML = `
+                <svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Generating PDF...
+              `;
+              
+              // Gather Data for PDF
+              const formData = new FormData(form);
+              const pdfData = {
+                patient_name: formData.get('patient_name') || 'Not provided',
+                patient_age: formData.get('patient_age') || 'Not provided',
+                diabetes_type: formData.get('diabetes_type') || 'Not provided',
+                diabetes_duration: formData.get('diabetes_duration') || 'Not provided',
+                symptoms: formData.get('symptoms') || 'Not provided',
+                fundus_result: data.fundus_result,
+                oct_result: data.oct_result,
+                combined_result: data.combined_result // If your backend sends this
+              };
+              
+              const response = await fetch('/generate_pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pdfData)
+              });
+              
+              if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `AI_DRIVE_Report_${new Date().toISOString().slice(0,10)}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+              } else {
+                throw new Error('PDF Generation failed');
+              }
+            } catch (error) {
+              alert('Error generating PDF: ' + error.message);
+            } finally {
+              downloadBtn.disabled = false;
+              downloadBtn.innerHTML = `
+                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Download Official PDF Report</span>
+              `;
+            }
+          });
+        }
+      } catch (err) {
+        loading.classList.add('hidden');
+        resultsContent.innerHTML = `<div class="bg-red-900 border border-red-700 p-6 rounded text-center"><p class="font-bold text-xl">⚠️ Connection Error</p><p>${err.message}</p></div>`;
+        console.error("Full Error:", err);
+      }
+    });
+  </script>
+  
+  <script src="/static/app.js"></script>
+</body>
+</html>

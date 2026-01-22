@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title data-translate="analysis">Analysis - AI-DRIVE</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-gray-900 dark:bg-gray-900 text-gray-200 dark:text-gray-200 p-6 transition-colors duration-300">
+  <div class="fixed top-4 left-4 z-50">
+    <select id="language-selector" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm shadow-lg">
+      <option value="en">🇺🇸 English</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="it">🇮🇹 Italiano</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="ko">🇰🇷 한국어</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+      <option value="bn">🇧🇩 বাংলা</option>
+      <option value="ur">🇵🇰 اردو</option>
+      <option value="ta">🇮🇳 தமிழ்</option>
+      <option value="te">🇮🇳 తెలుగు</option>
+      <option value="ml">🇮🇳 മലയാളം</option>
+      <option value="kn">🇮🇳 ಕನ್ನಡ</option>
+      <option value="gu">🇮🇳 ગુજરાતી</option>
+      <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+      <option value="mr">🇮🇳 मराठी</option>
+    </select>
+  </div>
+
+  <div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-lg shadow-lg transition-colors hover:bg-gray-300 dark:hover:bg-gray-600">
+      <svg id="sun-icon" class="w-6 h-6 text-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+      </svg>
+      <svg id="moon-icon" class="w-6 h-6 text-gray-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-cyan-400" data-translate="analysis">📊 AI-DRIVE Analysis</h1>
+      <div>
+        <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors" data-translate="logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gray-800 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 class="text-sm text-gray-400" data-translate="total-patients">Total Patients</h3>
+        <p class="text-2xl font-bold text-cyan-400">{{ records|length }}</p>
+      </div>
+      <div class="bg-gray-800 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 class="text-sm text-gray-400" data-translate="diseases-detected">Diseases Detected</h3>
+        <p class="text-2xl font-bold text-orange-400">{{ disease_counts|length }}</p>
+      </div>
+      <div class="bg-gray-800 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 class="text-sm text-gray-400" data-translate="avg-age">Avg Age</h3>
+        <p class="text-2xl font-bold text-green-400">
+          {% set ages = records|selectattr('age')|map(attribute='age')|list %}
+          {% if ages %}{{ "%.1f"|format(ages|sum / ages|length) }}{% else %}N/A{% endif %}
+        </p>
+      </div>
+      <div class="bg-gray-800 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 class="text-sm text-gray-400" data-translate="latest-diagnosis">Latest Diagnosis</h3>
+        <p class="text-sm text-gray-300">
+          {% if records %}{{ records[0].timestamp.strftime('%Y-%m-%d') }}{% else %}N/A{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-cyan-300" data-translate="patient-records">📋 Patient Diagnosis Records</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead class="text-left text-gray-300 bg-gray-700">
+            <tr>
+              <th class="p-3 border border-gray-600" data-translate="s-no">S.No</th>
+              <th class="p-3 border border-gray-600" data-translate="patient">Patient</th>
+              <th class="p-3 border border-gray-600" data-translate="age">Age</th>
+              <th class="p-3 border border-gray-600" data-translate="diabetes-type-col">Diabetes Type</th>
+              <th class="p-3 border border-gray-600" data-translate="primary-diagnosis">Primary Diagnosis</th>
+              <th class="p-3 border border-gray-600" data-translate="confidence">Confidence</th>
+              <th class="p-3 border border-gray-600" data-translate="severity">Severity</th>
+              <th class="p-3 border border-gray-600" data-translate="fundus">Fundus</th>
+              <th class="p-3 border border-gray-600" data-translate="oct">OCT</th>
+              <th class="p-3 border border-gray-600" data-translate="date">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in records %}
+            <tr class="border-t border-gray-700 hover:bg-gray-700 transition-colors">
+              <td class="p-3 border border-gray-600 text-center font-semibold">{{ loop.index }}</td>
+              <td class="p-3 border border-gray-600">{{ r.patient_name }}</td>
+              <td class="p-3 border border-gray-600">{{ r.age or 'N/A' }}</td>
+              <td class="p-3 border border-gray-600">{{ r.diabetes_type or 'N/A' }}</td>
+              <td class="p-3 border border-gray-600">
+                <span class="px-2 py-1 rounded text-xs
+                  {% if r.primary_diagnosis == 'Normal' %}bg-green-600
+                  {% elif r.primary_diagnosis %}bg-red-600
+                  {% else %}bg-gray-600{% endif %}">
+                  {{ r.primary_diagnosis or 'N/A' }}
+                </span>
+              </td>
+              <td class="p-3 border border-gray-600">{{ "%.1f"|format(r.overall_confidence or 0) }}%</td>
+              
+              <td class="p-3 border border-gray-600">
+                <span class="px-2 py-1 rounded text-xs
+                  {% if r.severity == 'High' %}bg-red-600
+                  {% elif r.severity == 'Moderate' %}bg-yellow-600
+                  {% elif r.severity == 'Mild' %}bg-orange-600
+                  {% elif 'Healthy' in r.severity %}bg-green-600
+                  {% else %}bg-gray-600{% endif %}">
+                  {{ r.severity or 'N/A' }}
+                </span>
+              </td>
+
+              <td class="p-3 border border-gray-600">
+                {% if r.fundus_diagnosis and r.fundus_diagnosis != 'N/A' %}
+                  <span class="text-green-400">✓</span> {{ r.fundus_diagnosis }}
+                {% else %}
+                  <span class="text-gray-500">✗</span>
+                {% endif %}
+              </td>
+
+              <td class="p-3 border border-gray-600">
+                {% if r.oct_diagnosis and r.oct_diagnosis != 'N/A' %}
+                  <span class="text-green-400">✓</span> {{ r.oct_diagnosis }}
+                {% else %}
+                  <span class="text-gray-500">✗</span>
+                {% endif %}
+              </td>
+              
+              <td class="p-3 border border-gray-600">{{ r.timestamp.strftime('%Y-%m-%d %H:%M') if r.timestamp else 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div class="bg-gray-800 p-6 rounded-lg">
+        <h2 class="text-xl font-semibold mb-4 text-cyan-300" data-translate="disease-distribution">📈 Disease Distribution</h2>
+        <div id="diseaseChart" style="height:400px"></div>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-lg">
+        <h2 class="text-xl font-semibold mb-4 text-cyan-300" data-translate="age-group-distribution">👥 Age Group Distribution</h2>
+        <div id="ageChart" style="height:400px"></div>
+      </div>
+    </div>
+
+    <div class="bg-gray-800 p-6 rounded-lg mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-cyan-300" data-translate="age-disease-analysis">🔍 Age Group vs Disease Analysis</h2>
+      <div id="ageDiseaseChart" style="height:500px"></div>
+    </div>
+  </div>
+
+  <script>
+    // Disease Distribution Chart
+    const diseaseData = {{ disease_counts|tojson }};
+    const diseaseLabels = Object.keys(diseaseData);
+    const diseaseValues = Object.values(diseaseData);
+    
+    Plotly.newPlot('diseaseChart', [{
+      x: diseaseLabels,
+      y: diseaseValues,
+      type: 'bar',
+      marker: {
+        color: ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#06b6d4']
+      }
+    }], {
+      title: 'Number of Patients by Disease',
+      xaxis: { title: 'Disease Type' },
+      yaxis: { title: 'Number of Patients' },
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: '#e5e7eb' },
+      margin: { t: 50, b: 50, l: 50, r: 50 }
+    });
+
+    // Age Group Distribution Chart
+    const ageData = {{ age_groups|tojson }};
+    const ageLabels = Object.keys(ageData);
+    const ageValues = Object.values(ageData);
+    
+    Plotly.newPlot('ageChart', [{
+      labels: ageLabels,
+      values: ageValues,
+      type: 'pie',
+      marker: {
+        colors: ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6']
+      }
+    }], {
+      title: 'Patient Distribution by Age Group',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: '#e5e7eb' },
+      margin: { t: 50, b: 50, l: 50, r: 50 }
+    });
+
+    // Age vs Disease Analysis Chart
+    const ageDiseaseData = {{ age_disease_data|tojson }};
+    const ageGroups = Object.keys(ageDiseaseData);
+    const diseases = [...new Set(Object.values(ageDiseaseData).flatMap(obj => Object.keys(obj)))];
+    
+    const traces = diseases.map(disease => {
+      const values = ageGroups.map(ageGroup => 
+        ageDiseaseData[ageGroup] && ageDiseaseData[ageGroup][disease] ? ageDiseaseData[ageGroup][disease] : 0
+      );
+      
+      return {
+        x: ageGroups,
+        y: values,
+        name: disease,
+        type: 'bar'
+      };
+    });
+    
+    Plotly.newPlot('ageDiseaseChart', traces, {
+      title: 'Disease Cases by Age Group',
+      xaxis: { title: 'Age Group' },
+      yaxis: { title: 'Number of Cases' },
+      barmode: 'group',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: '#e5e7eb' },
+      margin: { t: 50, b: 50, l: 50, r: 50 }
+    });
+  </script>
+  
+  <script src="/static/app.js"></script>
+</body>
+</html>

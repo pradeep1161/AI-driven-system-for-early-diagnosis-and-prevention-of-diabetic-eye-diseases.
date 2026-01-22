@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-translate="app-title">AI-DRIVE System - Home</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            medical: { 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
+    .dark .glass { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(55, 65, 81, 0.5); }
+    
+    /* Modal Animation */
+    .modal-enter { opacity: 0; transform: scale(0.95); }
+    .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
+    .modal-exit { opacity: 1; transform: scale(1); }
+    .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans selection:bg-cyan-500 selection:text-white">
+
+  <nav class="fixed w-full z-40 glass border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='/'">
+          <span class="text-2xl">👁️</span>
+          <span class="font-bold text-xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">AI-DRIVE</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/" class="text-cyan-600 dark:text-cyan-400 font-medium" data-translate="home">Home</a>
+          <a href="/diagnosis" class="hover:text-cyan-500 transition-colors" data-translate="diagnosis-portal">Diagnosis Portal</a>
+          <a href="/login" class="px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition text-sm font-medium" data-translate="analysis-authorized">Admin Login</a>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <select id="language-selector" class="bg-transparent text-sm border border-gray-300 dark:border-gray-600 rounded-md py-1 px-2 focus:ring-2 focus:ring-cyan-500">
+              <option value="en">🇺🇸 EN</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="fr">🇫🇷 FR</option>
+              <option value="hi">🇮🇳 HI</option>
+            </select>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+              <svg id="sun-icon" class="w-5 h-5 text-yellow-500 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+              <svg id="moon-icon" class="w-5 h-5 text-gray-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-white dark:from-slate-900 dark:to-slate-800"></div>
+        <div class="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 rounded-full bg-cyan-400/20 blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 -ml-40 -mb-40 w-80 h-80 rounded-full bg-blue-500/20 blur-3xl"></div>
+    </div>
+    
+    <div class="container mx-auto px-6 text-center">
+      <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 text-sm font-semibold tracking-wide">
+        AI Healthcare
+      </div>
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+        <span class="block text-slate-800 dark:text-white">Advanced Eye Care</span>
+        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Powered by AI</span>
+      </h1>
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-600 dark:text-slate-300 leading-relaxed" data-translate="about-text">
+        Early detection of Diabetic Retinopathy, Glaucoma, and Cataracts using state-of-the-art Deep Learning on Fundus and OCT imagery.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/diagnosis" class="px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-lg shadow-lg hover:shadow-cyan-500/30 transition transform hover:-translate-y-1">
+          Start Diagnosis Now
+        </a>
+        <a href="#learn-more" class="px-8 py-4 rounded-lg glass text-slate-700 dark:text-white font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition border border-gray-300 dark:border-gray-600">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="learn-more" class="container mx-auto px-6 py-20">
+    <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-slate-800 dark:text-white mb-4">Supported Conditions</h2>
+        <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Click on any condition below to view detailed comparisons between healthy and diseased eyes.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      
+      <div 
+        onclick="openModal('Diabetic Retinopathy', 'Caused by damage to the blood vessels of the retina in people with diabetes. It is a leading cause of blindness. Early stages may have no symptoms, but it can lead to vision loss if untreated.', '/assets/normal_diabetic_retinopathy.jpg', '/assets/diseased_diabetic_retinopathy.jpg')"
+        class="group glass rounded-2xl p-4 transition hover:bg-white dark:hover:bg-gray-800 hover:shadow-xl cursor-pointer relative overflow-hidden ring-1 ring-transparent hover:ring-cyan-400/50"
+      >
+        <div class="h-48 overflow-hidden rounded-xl mb-4 relative">
+          <img src="/assets/diseased_diabetic_retinopathy.jpg" alt="DR" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+            <span class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-bold border border-white/30">View Comparison</span>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-400 mb-2" data-translate="diabetic-retinopathy">Diabetic Retinopathy</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">Damage to retinal blood vessels. Leading cause of blindness in diabetics.</p>
+      </div>
+
+      <div 
+        onclick="openModal('Cataracts', 'A cataract is a clouding of the clear lens of the eye. For people who have cataracts, seeing through cloudy lenses is a bit like looking through a frosty or fogged-up window. Diabetes accelerates this process.', '/assets/normal_cataracts.jpg', '/assets/diseased_cataracts.jpg')"
+        class="group glass rounded-2xl p-4 transition hover:bg-white dark:hover:bg-gray-800 hover:shadow-xl cursor-pointer relative overflow-hidden ring-1 ring-transparent hover:ring-cyan-400/50"
+      >
+        <div class="h-48 overflow-hidden rounded-xl mb-4 relative">
+          <img src="/assets/diseased_cataracts.jpg" alt="Cataracts" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+            <span class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-bold border border-white/30">View Comparison</span>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-400 mb-2" data-translate="cataracts">Cataracts</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">Clouding of the lens. Accelerated by high blood sugar levels.</p>
+      </div>
+
+      <div 
+        onclick="openModal('Glaucoma', 'Glaucoma is a group of eye conditions that damage the optic nerve, the health of which is vital for good vision. This damage is often caused by an abnormally high pressure in your eye.', '/assets/normal_glaucoma.jpg', '/assets/diseased_glaucoma.jpg')"
+        class="group glass rounded-2xl p-4 transition hover:bg-white dark:hover:bg-gray-800 hover:shadow-xl cursor-pointer relative overflow-hidden ring-1 ring-transparent hover:ring-cyan-400/50"
+      >
+        <div class="h-48 overflow-hidden rounded-xl mb-4 relative">
+            <img src="/assets/diseased_glaucoma.jpg" alt="Glaucoma" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                <span class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-bold border border-white/30">View Comparison</span>
+            </div>
+        </div>
+        <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">Glaucoma</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">Optic nerve damage caused by abnormally high pressure in the eye.</p>
+      </div>
+
+      <div 
+        onclick="openModal('Macular Edema (DME)', 'Diabetic Macular Edema (DME) is an accumulation of fluid in the macula—part of the retina that controls our most detailed vision abilities—due to leaking blood vessels.', '/assets/normal_dme.jpg', '/assets/diseased_dme.jpg')"
+        class="group glass rounded-2xl p-4 transition hover:bg-white dark:hover:bg-gray-800 hover:shadow-xl cursor-pointer relative overflow-hidden ring-1 ring-transparent hover:ring-cyan-400/50"
+      >
+        <div class="h-48 overflow-hidden rounded-xl mb-4 relative">
+            <img src="/assets/diseased_dme.jpg" alt="DME" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                <span class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-bold border border-white/30">View Comparison</span>
+            </div>
+        </div>
+        <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">Macular Edema (DME)</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">Fluid accumulation in the macula causing swelling and blurred vision.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="disease-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-900/90 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop"></div>
+
+    <div class="fixed inset-0 z-10 overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+        
+        <div class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-5xl opacity-0 scale-95" id="modal-panel">
+            
+            <div class="bg-gradient-to-r from-cyan-600 to-blue-600 px-6 py-4 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-white" id="modal-title">Disease Name</h3>
+                <button type="button" onclick="closeModal()" class="text-cyan-100 hover:text-white transition">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="px-6 py-6">
+                <p id="modal-desc" class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed border-b border-gray-200 dark:border-gray-700 pb-6"></p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-bold mb-3">Normal / Healthy</span>
+                        <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-green-200 dark:border-green-900/50 bg-gray-50 dark:bg-gray-900 flex items-center justify-center h-72 md:h-80">
+                            <img id="modal-img-normal" src="" alt="Normal Eye" class="max-w-full max-h-full object-contain p-1">
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-bold mb-3">Diseased / Abnormal</span>
+                        <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-red-200 dark:border-red-900/50 bg-gray-50 dark:bg-gray-900 flex items-center justify-center h-72 md:h-80">
+                            <img id="modal-img-diseased" src="" alt="Diseased Eye" class="max-w-full max-h-full object-contain p-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 flex justify-end">
+                <button type="button" onclick="closeModal()" class="inline-flex w-full justify-center rounded-lg bg-white dark:bg-gray-600 px-5 py-2.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-gray-50 dark:hover:bg-gray-500 sm:mt-0 sm:w-auto transition">Close Details</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-gray-200 dark:border-gray-800 py-8 text-center text-slate-500 mt-20">
+    <p>&copy; 2025 AI-DRIVE System. <br class="md:hidden"><span class="text-xs">Deep Learning Medical Assistant. For informational use only.</span></p>
+  </footer>
+  
+  <script src="/static/app.js"></script>
+  
+  <script>
+    const modal = document.getElementById('disease-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalPanel = document.getElementById('modal-panel');
+
+    // UI Elements
+    const mTitle = document.getElementById('modal-title');
+    const mDesc = document.getElementById('modal-desc');
+    const mImgNorm = document.getElementById('modal-img-normal');
+    const mImgDis = document.getElementById('modal-img-diseased');
+
+    function openModal(title, description, imgNormal, imgDiseased) {
+        // Set Content
+        mTitle.innerText = title;
+        mDesc.innerText = description;
+        mImgNorm.src = imgNormal;
+        mImgDis.src = imgDiseased;
+
+        // Show Modal Container
+        modal.classList.remove('hidden');
+
+        // Small timeout to allow CSS transition to trigger opacity change
+        setTimeout(() => {
+            modalBackdrop.classList.remove('opacity-0');
+            modalPanel.classList.remove('opacity-0', 'scale-95');
+        }, 10);
+    }
+
+    function closeModal() {
+        // Fade out
+        modalBackdrop.classList.add('opacity-0');
+        modalPanel.classList.add('opacity-0', 'scale-95');
+
+        // Wait for transition to finish before hiding container
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 200);
+    }
+
+    // Close on backdrop click
+    modalBackdrop.addEventListener('click', closeModal);
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape" && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+  </script>
+</body>
+</html>
