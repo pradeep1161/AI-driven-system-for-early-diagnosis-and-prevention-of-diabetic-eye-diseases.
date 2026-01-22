@@ -30,8 +30,8 @@ A comprehensive AI-powered web application for detecting diabetic eye diseases u
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/pradeep1161/diabetic-eye-detection.git
-   cd diabetic-eye-detection
+   git clone https://github.com/pradeep1161/AI-driven-system-for-early-diagnosis-and-prevention-of-diabetic-eye-diseases..git
+   cd AI-driven-system-for-early-diagnosis-and-prevention-of-diabetic-eye-diseases.
    ```
 
 2. **Set up environment**
